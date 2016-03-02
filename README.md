@@ -13,7 +13,7 @@ INPUT FLAGS:
 
   -c, --ciphers  Choose which ciphers to apply and in which order to apply them. The string of letters and numbers that follows the -c will be used to determine which ciphers to use and the order in which to apply them.
         The available ciphers are:
-          C[1-25] - Caesar cipher - replaces the original letter with the nth letter before it REQUIRES A NUMBER FROM 1 to 25 INCLUSIVE AFTER THE C (a Caesar Cipher of 0 is the original text, a Caesar Cipher of 26 is an Atbash Cipher)
+          C[1-25] - Caesar cipher - replaces the original letter with the nth letter AFTER it in the alphabet REQUIRES A NUMBER FROM 1 to 25 INCLUSIVE AFTER THE C (a Caesar Cipher of 0 or 26 is the original text and numbers outside that range can be reduced to a number from 1 to 25)
           A - Atbash cipher - reverses the alphabet (so A becomes Z, B becomes Y and so on)
           N - A1Z26 cipher - replaces the nth letter of the alphabet with a 2 digit version of the number n (A becomes 01, J becomes 10, etc)
           V - Vigenère cipher - uses a series of Caesar ciphers and a key word to encode the input text. NB: USING THIS CIPHER REQUIRES THE -k FLAG AND A KEYWORD!!! The keyword is used to "mask" the text by determining the Caesar shift of each letter in the original text.
