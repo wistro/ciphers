@@ -6,12 +6,12 @@ example usage: cipher.py -e -c C3N -m bill is watching
                   ouput: 05121515 1222 2604230611121710
 INPUT FLAGS:
 
-  -e (default)  Encode input text with given ciphers
+  -e, --encode (default)  Encode input text with given ciphers
 
-  -d  Decode input text with given ciphers. (If text was encoded with multiple ciphers, you will need to reverse the order of encoding to decode properly).
+  -d, --decode  Decode input text with given ciphers. (If text was encoded with multiple ciphers, you will need to reverse the order of encoding to decode properly).
         If decoding an A1Z26 cipher remember to add leading zeros for numbers 1-9 or you will get some weird output.
 
-  -c  Choose which ciphers to apply and in which order to apply them. The string of letters and numbers that follows the -c will be used to determine which ciphers to use and the order in which to apply them.
+  -c, --ciphers  Choose which ciphers to apply and in which order to apply them. The string of letters and numbers that follows the -c will be used to determine which ciphers to use and the order in which to apply them.
         The available ciphers are:
           C[1-25] - Caesar cipher - replaces the original letter with the nth letter before it REQUIRES A NUMBER FROM 1 to 25 INCLUSIVE AFTER THE C (a Caesar Cipher of 0 is the original text, a Caesar Cipher of 26 is an Atbash Cipher)
           A - Atbash cipher - reverses the alphabet (so A becomes Z, B becomes Y and so on)
@@ -51,10 +51,12 @@ INPUT FLAGS:
               Key:      GRAVITYGRAVITYGRAV (keyword "GRAVITY" is entered as many times as necessary to fit the length of the message)
               Cipher:   SRBZTXYZJSKZBLQCEN
 
-  -k  Keyword for a Vignère cipher. Can be any word or phrase with no spaces and no special characters.
+  -k, --keyword  Keyword for a Vignère cipher. Can be any word or phrase with no spaces and no special characters.
 
-  -m  Input message to encode. (can be given as last input without the flag)
+  -m, --message  Input message to encode. (can be given as last input without the flag)
 
   -v  Verbose mode. Will output the intermediary encodings/decodings as they are completed when using multiple successive ciphers
+
+  -h, --help print this information
 
 Will output the final encoded message to stdout.
