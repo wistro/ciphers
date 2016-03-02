@@ -39,7 +39,7 @@ class Cipher:
     self.message = ""
     self.keyword = ""
     self.output = ""
-    _createDic()
+    self._createDic()
 
 #creates a dictionary with values in the form "input char": "output char"
   def _createDic(self) :
@@ -47,19 +47,20 @@ class Cipher:
       self.replace = {x: y for x in self.__vigtable[0] for y in self.__vigtable[offset]}
     elif (self.cipher == "A") :
       self.replace = {x: y for x in self.__vigtable[0] for y in self.__atbash} 
-    elif (self.cipher == "N") :
+    elif (self.cipher == "N" OR self.cipher == "V") :
       self.replace = {x: y for x in self.__vigtable[0] for y in self.__num}
-    elif (self.cipher == "V") :
-      return 0
-    else
+    else :
       print "The cipher code supplied is invalid. Please use only 'C' 'A' 'N' or 'V'"
-      return
+    return
 
   def encode(self, message, keyword = "NONE") :
     self.message = message.upper() #make sure message is all uppercase
     self.keyword = keyword.upper() #make sure keyword is all uppercase
     if (self.cipher == "V") :
-      DO THE COMPLICATED VIGENERE THING
+      #DO THE COMPLICATED VIGENERE THING
+      self.__repeat()
+      for letter in self.message :
+        self.output += self.__vigtable[self.replace[letter]][
     else :
       for letter in self.message :
         self.output += self.replace[letter]
@@ -67,3 +68,4 @@ class Cipher:
 
   def __repeat(self) :
     self.keyword = (self.keyword * int(math.ceil(float(len(self.message)) / len(self.keyword))))[:len(self.message)]
+    return
