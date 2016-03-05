@@ -32,9 +32,12 @@ class Cipher:
   __atbash = ('Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A') 
   __num = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26)
   
-  def __init__(self, cipher, offset = 26):
-    self.cipher = cipher
-    self.offset = offset
+  def __init__(self, cipher):
+    self.cipher = cipher[0]
+    if ( len(cipher) > 1 ):
+      self.offset = cipher[1:]
+    else
+      self.offset = 26
     self.replace = {}
     self.message = ""
     self.keyword = ""
@@ -103,7 +106,6 @@ class Cipher:
       for char in self.message :
         self.output += self.replace[char]
     return
-    
 
   #repeats keyword such that it is the same length as message
   def __repeat(self) :
