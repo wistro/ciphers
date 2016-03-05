@@ -25,7 +25,7 @@ def encode(ciphers, message, keyword = "", verbose = False, encode = True):
     cipher = classdef.Cipher( m.group() )
     if ( encode ):
       cipher.encode(tehMessage, keyword)
-    else
+    else:
       cipher.decode(tehMessage, keyword)
     if( verbose ):
       print cipher.message
@@ -34,6 +34,6 @@ def encode(ciphers, message, keyword = "", verbose = False, encode = True):
     ciphers = ciphers[m.end():]
   if ( encode ):
     print "The final encoded message is: " + tehMessage
-  else
+  else:
     print "The final decoded message is: " + tehMessage
   return

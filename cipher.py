@@ -35,7 +35,7 @@ def main(argv) :
       if ( encode == False ):
         print 'please choose either encode (-e) or decode (-d) not both'
         sys.exit()
-    else
+    else :
       message = arg
   functions.encode(ciphers, message, keyword, verbose, encode)
 

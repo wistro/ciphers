@@ -36,7 +36,7 @@ class Cipher:
     self.cipher = cipher[0]
     if ( len(cipher) > 1 ):
       self.offset = cipher[1:]
-    else
+    else:
       self.offset = 26
     self.replace = {}
     self.message = ""
