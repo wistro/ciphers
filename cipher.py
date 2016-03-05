@@ -25,7 +25,7 @@ def main(argv) :
     elif opt in ('-c', '--ciphers'):
       ciphers = arg
     elif opt in ('-m', '--message'):
-      message = arg
+      message = str(arg)
     elif opt in ('-k', '--keyword'):
       keyword = arg
     elif opt in ('-d', '--decode'):
@@ -37,7 +37,7 @@ def main(argv) :
         sys.exit()
     else :
       message = arg
-  functions.encode(ciphers, message, keyword, verbose, encode)
+  functions.dothething(ciphers, message, keyword, verbose, encode)
 
 if __name__ == "__main__":
   main(sys.argv[1:])

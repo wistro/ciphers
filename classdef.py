@@ -30,12 +30,12 @@ class Cipher:
       ('Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X'),
       ('Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y'))
   __atbash = ('Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A') 
-  __num = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26)
+  __num = ('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26')
   
   def __init__(self, cipher):
     self.cipher = cipher[0]
     if ( len(cipher) > 1 ):
-      self.offset = cipher[1:]
+      self.offset = int(cipher[1:])
     else:
       self.offset = 26
     self.replace = {}
@@ -47,11 +47,11 @@ class Cipher:
 #see _createDecodeDic for dictionary for decoding
   def _createEncodeDic(self) :
     if (self.cipher == "C") :
-      self.replace = {x: y for x in self.__vigtable[0] for y in self.__vigtable[offset]}
+      self.replace = dict(zip(self.__vigtable[self.offset], self.__vigtable[0]))
     elif (self.cipher == "A") :
-      self.replace = {x: y for x in self.__vigtable[0] for y in self.__atbash} 
-    elif ( (self.cipher == "N") or (self.cipher == "V") ) :
-      self.replace = {x: y for x in self.__vigtable[0] for y in self.__num}
+      self.replace = dict(zip(self.__vigtable[0], self.__atbash)) 
+    elif ( (self.cipher == "N") or (self.cipher == "V") ):
+      self.replace = dict(zip(self.__vigtable[0], self.__num))
     else :
       print "The cipher code supplied is invalid. Please use only 'C' 'A' 'N' or 'V'"
     return
@@ -63,14 +63,15 @@ class Cipher:
 #given that dictionaries are unsorted "first entry" above refers to the first entry created by the function
   def _createDecodeDic(self) :
     if (self.cipher == "C") :
-      self.replace = {x: y for x in self.__vigtable[offset] for y in self.__vigtable[0]}
+      self.replace = dict(zip(self.__vigtable[0], self.__vigtable[self.offset]))
     elif (self.cipher == "A") :
-      self.replace = {x: y for x in self.__atbash for y in self.__vigtable[0]} 
+      self.replace = dict(zip(self.__atbash, self.__vigtable[0])) 
     elif (self.cipher == "N") :
-      self.replace = {x: y for x in self.__num for y in self.__vigtable[0]}
+      self.replace = dict(zip(self.__num, self.__vigtable[0]))
+      #print self.replace
     elif (self.cipher == "V") :
-      self.replace = {x: y for x in self.__num for y in self.__vigtable[0]} 
-      self.replace += {x: y for x in self.__vigtable[0] for y in self.__num}
+      self.replace = dict(zip(self.__num, self.__vigtable[0]))
+      self.replace.update(dict(zip(self.__vigtable[0], self.__num)))
     else :
       print "The cipher code supplied is invalid. Please use only 'C' 'A' 'N' or 'V'"
     return
@@ -92,7 +93,9 @@ class Cipher:
   def decode(self, message, keyword = "NONE") :
     self.message = message.upper() #if message is letters, ensure it is all uppercase
     self.keyword = keyword.upper() #make sure keyword is all uppercase
+    #print self.message
     self._createDecodeDic()
+    #print self.replace
     if (self.cipher == "V") :
       self.__repeat() #repeat keyword such that it is the same length as the encoded message
       for index in range(len(self.message)) :
@@ -102,6 +105,9 @@ class Cipher:
         for jndex in range(len(thisTable)) :
           thisString += thisTable[jndex]
         self.output += self.replace[thisString.find(self.message[index]) + 1]
+    elif (self.cipher == "N") :
+      for index in range(0, len(self.message), 2) :
+        self.output += self.replace[self.message[index:index+2]]
     else :
       for char in self.message :
         self.output += self.replace[char]
