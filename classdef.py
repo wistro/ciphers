@@ -1,8 +1,9 @@
 #!/usr/bin/python
 
+from math import ceil
+
 class Cipher:
   'Class that forms the paramaters of any cipher'
-  from math import ceil
   __vigtable = (('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'),
       ('B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A'),
       ('C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B'),
@@ -98,13 +99,24 @@ class Cipher:
     #print self.replace
     if (self.cipher == "V") :
       self.__repeat() #repeat keyword such that it is the same length as the encoded message
+      #print self.keyword
       for index in range(len(self.message)) :
-        thisTable = self.__vigtable[self.replace[self.keyword[index] - 1]] #pull the row from vigTable that corresponds to the current letter in the keyword
+        #print self.keyword[index]
+        #print self.replace[self.keyword[index]]
+        #print self.__vigtable[int(self.replace[self.keyword[index]])]
+        thisTable = self.__vigtable[int(self.replace[self.keyword[index]]) - 1] #pull the row from vigTable that corresponds to the current letter in the keyword
         #then convert the tuple thisTable into a string so that we can use the string.find function
         thisString = ""
         for jndex in range(len(thisTable)) :
           thisString += thisTable[jndex]
-        self.output += self.replace[thisString.find(self.message[index]) + 1]
+        #print thisString
+        #print self.message[index]
+        #print thisString.find(self.message[index])
+        pos = str(thisString.find(self.message[index]) + 1)
+        if ( len(pos) == 1 ):
+          pos = '0' + pos
+        self.output += self.replace[pos]
+        #print self.output
     elif (self.cipher == "N") :
       for index in range(0, len(self.message), 2) :
         self.output += self.replace[self.message[index:index+2]]
@@ -115,5 +127,5 @@ class Cipher:
 
   #repeats keyword such that it is the same length as message
   def __repeat(self) :
-    self.keyword = (self.keyword * int(math.ceil(float(len(self.message)) / len(self.keyword))))[:len(self.message)]
+    self.keyword = (self.keyword * int(ceil(float(len(self.message)) / len(self.keyword))))[:len(self.message)]
     return
