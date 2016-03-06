@@ -85,7 +85,11 @@ class Cipher:
       #DO THE COMPLICATED VIGENERE THING
       self.__repeat() #repeats keyword such that it is the same length as message
       for index in range(len(self.message)) :
-        self.output += self.__vigtable[self.replace[self.message[index]]][self.replace[self.keyword[index]]]
+        #print self.message[index]
+        #print self.keyword[index]
+        #print self.replace[self.message[index]]
+        #print self.replace[self.keyword[index]]
+        self.output += self.__vigtable[int(self.replace[self.keyword[index]]) - 1][int(self.replace[self.message[index]]) -1]
     else :
       for letter in self.message :
         self.output += self.replace[letter]
